@@ -25,14 +25,21 @@ const addWildcardRoutes = routes =>
     options('/*', notfound),
   ]);
 
-const createServerWithWildcards = routes =>
-  listen(micro(router(...addWildcardRoutes(routes))));
+const createServerWithWildcards = async routes => {
+  const server = micro(router(...addWildcardRoutes(routes)));
+  const baseUrl = await listen(server);
+
+  return {
+    server,
+    baseUrl,
+  };
+};
 
 const execute = (method, baseUrl, uri, options) =>
   request[method](`${baseUrl}${uri}`, options);
 
-const createService = async routes => {
-  const baseUrl = await createServerWithWildcards(routes);
+const createServer = async routes => {
+  const { baseUrl, server } = await createServerWithWildcards(routes);
 
   return {
     get: (uri, options) => execute('get', baseUrl, uri, options),
@@ -42,9 +49,10 @@ const createService = async routes => {
     patch: (uri, options) => execute('patch', baseUrl, uri, options),
     head: (uri, options) => execute('head', baseUrl, uri, options),
     options: (uri, options) => execute('options', baseUrl, uri, options),
+    close: () => server.close(),
   };
 };
 
 module.exports = {
-  createService,
+  createServer,
 };

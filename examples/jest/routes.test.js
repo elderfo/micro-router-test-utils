@@ -9,6 +9,11 @@ beforeAll(async () => {
   server = await createServer(routes);
 });
 
+// Shutdown the server so test suite does not hang
+afterAll(async () => {
+  await server.close();
+});
+
 test('GET route1 should return expected value', async () => {
   const result = await server.get('/route1');
   expect(result).toEqual('route1');

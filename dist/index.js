@@ -18,13 +18,27 @@ const notfound = (req, res) => micro.send(res, 404, 'Not found route');
 
 const addWildcardRoutes = routes => routes.concat([get('/*', notfound), post('/*', notfound), put('/*', notfound), del('/*', notfound), patch('/*', notfound), head('/*', notfound), options('/*', notfound)]);
 
-const createServerWithWildcards = routes => listen(micro(router(...addWildcardRoutes(routes))));
+const createServerWithWildcards = (() => {
+  var _ref = _asyncToGenerator(function* (routes) {
+    const server = micro(router(...addWildcardRoutes(routes)));
+    const baseUrl = yield listen(server);
+
+    return {
+      server,
+      baseUrl
+    };
+  });
+
+  return function createServerWithWildcards(_x) {
+    return _ref.apply(this, arguments);
+  };
+})();
 
 const execute = (method, baseUrl, uri, options) => request[method](`${baseUrl}${uri}`, options);
 
-const createService = (() => {
-  var _ref = _asyncToGenerator(function* (routes) {
-    const baseUrl = yield createServerWithWildcards(routes);
+const createServer = (() => {
+  var _ref2 = _asyncToGenerator(function* (routes) {
+    const { baseUrl, server } = yield createServerWithWildcards(routes);
 
     return {
       get: function (uri, options) {
@@ -47,15 +61,18 @@ const createService = (() => {
       },
       options: function (uri, options) {
         return execute('options', baseUrl, uri, options);
+      },
+      close: function () {
+        return server.close();
       }
     };
   });
 
-  return function createService(_x) {
-    return _ref.apply(this, arguments);
+  return function createServer(_x2) {
+    return _ref2.apply(this, arguments);
   };
 })();
 
 module.exports = {
-  createService
+  createServer
 };
