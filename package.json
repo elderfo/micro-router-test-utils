@@ -1,0 +1,25 @@
+{
+  "name": "micro-router-test-utils",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "author": "Chris Getsfred <cgetsfred@gmail.com>",
+  "dependencies": {
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "test-listen": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "prettier": "^1.5.2",
+    "rimraf": "^2.6.1",
+    "micro": "~7.3.3"
+  },
+  "peerDependencies": {
+    "micro": "~7.3.3"
+  },
+  "scripts": {
+    "build": "rimraf dist/ && babel src --ignore *.test.js --out-dir dist --copy-files"
+  }
+}
