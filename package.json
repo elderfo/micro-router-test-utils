@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "codecov": "^2.3.0",
     "eslint": "^4.4.0",
     "eslint-config-elderfo": "^1.2.3",
     "husky": "^0.14.3",
@@ -31,16 +32,14 @@
     "build": "rimraf dist/ && babel src --ignore *.test.js --out-dir dist --copy-files",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:ci": "jest --coverage && codecov",
     "lint": "eslint ./src",
-    "ci": "npm-run-all test lint build",
+    "ci": "npm-run-all test:ci lint build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "precommit": "lint-staged"
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/examples/"
-    ],
+    "testPathIgnorePatterns": ["/node_modules/", "/examples/"],
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
       "!**/node_modules/**",

@@ -1,6 +1,7 @@
 _**Micro Router Test Server-**_ A tiny test server for [microrouter](https://github.com/pedronauck/micro-router) and Zeit's [micro](https://github.com/zeit/micro)
 
 [![Build Status](https://travis-ci.org/elderfo/microrouter-test-server.svg?branch=master)](https://travis-ci.org/elderfo/microrouter-test-server)
+[![codecov](https://codecov.io/gh/elderfo/microrouter-test-server/branch/master/graph/badge.svg)](https://codecov.io/gh/elderfo/microrouter-test-server)
 
 ## Features
 * **Async**. Designed for usage with `async` and `await`
