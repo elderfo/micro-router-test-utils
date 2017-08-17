@@ -1,9 +1,10 @@
-_**Micro Router Test Server-**_ A tiny test server for [microrouter](https://github.com/pedronauck/micro-router) Zeit's [micro](https://github.com/zeit/micro)
+_**Micro Router Test Server-**_ A tiny test server for [microrouter](https://github.com/pedronauck/micro-router) and Zeit's [micro](https://github.com/zeit/micro)
 
+[![Build Status](https://travis-ci.org/elderfo/microrouter-test-server.svg?branch=master)](https://travis-ci.org/elderfo/microrouter-test-server)
 
 ## Features
 * **Async**. Designed for usage with `async` and `await`
-* **Simple**. Test routes on a live server.
+* **Simple**. Test routes on a local live server.
 * **Tiny**. < 60 lines of code.
 * **Independent**. No reliance on specific testing frameworks.
 
@@ -60,7 +61,6 @@ test('GET route2 should return expected value', async () => {
   * `del(uri = String, options = Object)`
   * `patch(uri = String, options = Object)`
   * `head(uri = String, options = Object)`
-  * `options(uri = String, options = Object)`
   * `uri` is the relative path to the route
   * `options` is the configuration object for [Request](https://github.com/request/request)
   * methods return a promise ala [request-promise](https://github.com/request/request-promise)

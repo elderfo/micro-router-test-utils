@@ -1,14 +1,5 @@
 const micro = require('micro');
-const {
-  router,
-  get,
-  post,
-  put,
-  del,
-  patch,
-  head,
-  options,
-} = require('microrouter');
+const { router, get, post, put, del, patch, head } = require('microrouter');
 const request = require('request-promise');
 const listen = require('test-listen');
 
@@ -22,7 +13,6 @@ const addWildcardRoutes = routes =>
     del('/*', notfound),
     patch('/*', notfound),
     head('/*', notfound),
-    options('/*', notfound),
   ]);
 
 const createServerWithWildcards = async routes => {
@@ -36,7 +26,7 @@ const createServerWithWildcards = async routes => {
 };
 
 const execute = (method, baseUrl, uri, opts) =>
-  request[method](`${baseUrl}${uri}`, opts);
+  request[method === 'options' ? 'opts' : method](`${baseUrl}${uri}`, opts);
 
 const createServer = async routes => {
   const { baseUrl, server } = await createServerWithWildcards(routes);
@@ -48,7 +38,6 @@ const createServer = async routes => {
     del: (uri, opts) => execute('del', baseUrl, uri, opts),
     patch: (uri, opts) => execute('patch', baseUrl, uri, opts),
     head: (uri, opts) => execute('head', baseUrl, uri, opts),
-    options: (uri, opts) => execute('opts', baseUrl, uri, opts),
     close: () => server.close(),
   };
 };

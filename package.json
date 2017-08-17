@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "Chris Getsfred <cgetsfred@gmail.com>",
   "dependencies": {
-    "microrouter": "^2.1.1",
+    "microrouter": "^2.2.2",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "test-listen": "^1.0.1"
@@ -29,13 +29,22 @@
   "scripts": {
     "build": "rimraf dist/ && babel src --ignore *.test.js --out-dir dist --copy-files",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint ./src",
     "ci": "npm-run-all test lint build",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "precommit": "lint-staged"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/examples/"]
+    "testPathIgnorePatterns": ["/node_modules/", "/examples/"],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/dist/**",
+      "!**/coverage/**"
+    ],
+    "coverageDirectory": "./coverage/"
   },
   "repository": {
     "type": "git",
