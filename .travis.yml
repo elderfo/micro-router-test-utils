@@ -8,10 +8,11 @@ node_js:
   - '8'
   - '7'
   - '6'
-before_script:
-  - npm prune
+script:
+  - yarn run ci
+cache: yarn
 after_success:
-  - npm run semantic-release
+  - yarn run semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
