@@ -1,10 +1,11 @@
 {
   "name": "microrouter-test-server",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "main": "dist/index.js",
   "license": "MIT",
   "author": "Chris Getsfred <cgetsfred@gmail.com>",
   "dependencies": {
+    "microrouter": "^2.1.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "test-listen": "^1.0.1"
@@ -12,14 +13,40 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "prettier": "^1.5.2",
+    "eslint": "^4.4.0",
+    "eslint-config-elderfo": "^1.2.3",
+    "jest": "^20.0.4",
+    "lint-staged": "^4.0.2",
+    "micro": "~7.3.3",
+    "npm-run-all": "^4.0.2",
+    "prettier": "^1.5.3",
     "rimraf": "^2.6.1",
-    "micro": "~7.3.3"
+    "semantic-release": "^7.0.1"
   },
   "peerDependencies": {
     "micro": "~7.3.3"
   },
   "scripts": {
-    "build": "rimraf dist/ && babel src --ignore *.test.js --out-dir dist --copy-files"
+    "build": "rimraf dist/ && babel src --ignore *.test.js --out-dir dist --copy-files",
+    "test": "jest",
+    "lint": "eslint ./src",
+    "ci": "npm-run-all test lint build",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "precommit": "lint-staged"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/examples/"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elderfo/microrouter-test-server.git"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "jest --bail --findRelatedTests",
+      "eslint",
+      "git add"
+    ]
   }
 }

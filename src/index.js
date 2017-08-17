@@ -35,20 +35,20 @@ const createServerWithWildcards = async routes => {
   };
 };
 
-const execute = (method, baseUrl, uri, options) =>
-  request[method](`${baseUrl}${uri}`, options);
+const execute = (method, baseUrl, uri, opts) =>
+  request[method](`${baseUrl}${uri}`, opts);
 
 const createServer = async routes => {
   const { baseUrl, server } = await createServerWithWildcards(routes);
 
   return {
-    get: (uri, options) => execute('get', baseUrl, uri, options),
-    post: (uri, options) => execute('post', baseUrl, uri, options),
-    put: (uri, options) => execute('put', baseUrl, uri, options),
-    del: (uri, options) => execute('del', baseUrl, uri, options),
-    patch: (uri, options) => execute('patch', baseUrl, uri, options),
-    head: (uri, options) => execute('head', baseUrl, uri, options),
-    options: (uri, options) => execute('options', baseUrl, uri, options),
+    get: (uri, opts) => execute('get', baseUrl, uri, opts),
+    post: (uri, opts) => execute('post', baseUrl, uri, opts),
+    put: (uri, opts) => execute('put', baseUrl, uri, opts),
+    del: (uri, opts) => execute('del', baseUrl, uri, opts),
+    patch: (uri, opts) => execute('patch', baseUrl, uri, opts),
+    head: (uri, opts) => execute('head', baseUrl, uri, opts),
+    options: (uri, opts) => execute('opts', baseUrl, uri, opts),
     close: () => server.close(),
   };
 };
