@@ -19,6 +19,7 @@
     "url": "https://github.com/elderfo/microrouter-test-server.git"
   },
   "devDependencies": {
+    "faker": "^4.1.0",
     "jest": "^21.0.2"
   }
 }
