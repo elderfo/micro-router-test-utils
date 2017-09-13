@@ -21,12 +21,14 @@ Write a test (with [Jest](https://facebook.github.io/jest/))
 
 ```js
 // routes.test.js
-const { get } = require('microrouter');
+const { get, post, put } = require('microrouter');
+const { json, send } = require('micro');
 const { createServer } = require('microrouter-test-server');
 
 const routes = [
-  get('/route1', () => 'route1'), 
-  get('/route2', () => 'route2')
+  get('/route1', () => 'route1'),
+  post('/route2', req => json(req)),
+  put('/route3', (req, res) => send(res, 400, 'route3')),
 ];
 
 let server;
@@ -39,35 +41,85 @@ afterAll(async () => {
   await server.close();
 });
 
-test('GET route1 should return expected value', async () => {
+test('GET of route1 should return expected value', async () => {
   const result = await server.get('/route1');
   expect(result).toEqual('route1');
 });
 
-test('GET route2 should return expected value', async () => {
-  const result = await server.get('/route2');
-  expect(result).toEqual('route2');
+test('POST to route2 should return the payload', async () => {
+  const payload = { abc: 123 };
+  const result = await server.post('/route2', {
+    json: true,
+    body: payload,
+  });
+  expect(result).toEqual(payload);
+});
+
+test('PUT to route3 should reject with non-2xx status', async () => {
+  await expect(server.put('/route3')).rejects.toHaveProperty('statusCode', 400);
 });
 ```
 
-
-## Api
+## API
 
 ### `async createServer(routes = Array<microrouter-route>)`
 * `routes` - an array of routes returned by the route methods (`get`, `post`, `put`, `del`, `patch`, `head` and `options`) of `microrouter`
 * returns `Promise<Object>` with methods:
-  * `get(uri = String, options = Object)`
-  * `post(uri = String, options = Object)`
-  * `put(uri = String, options = Object)`
-  * `del(uri = String, options = Object)`
-  * `patch(uri = String, options = Object)`
-  * `head(uri = String, options = Object)`
-  * `uri` is the relative path to the route
-  * `options` is the configuration object for [Request](https://github.com/request/request)
-  * methods return a promise ala [request-promise](https://github.com/request/request-promise)
+  * `get(uri: String, options: RequestOptions)`
+  * `post(uri: String, options: RequestOptions)`
+  * `put(uri: String, options: RequestOptions)`
+  * `del(uri: String, options: RequestOptions)`
+  * `patch(uri: String, options: RequestOptions)`
+  * `head(uri: String, options: RequestOptions)`
+    * `uri` is the relative path to the route
+    * `options` is the configuration object for [`request`](https://github.com/request/request#requestoptions-callback)/[`request-promise`](https://github.com/request/request#requestoptions-callback)
+    * methods return a promise ala [request-promise](https://github.com/request/request-promise)
 
 ### `async close()`
 * Closes the active connection to the test server.
+
+## Examples
+
+### POST a payload
+
+```js
+const result = await server.post('/route2', {
+  json: true,
+  body: { my: 'payload' },
+});
+```
+
+### Handle non-2xx responses
+
+`microrouter-test-server` uses [`request-promise`](https://github.com/request/request#requestoptions-callback) to handle requests. By default, this library rejects on any status other than a 2xx. Here's a few ways to handle it:
+
+#### .catch(StatusCodeError)
+
+```js
+server.post('/route')
+  .then(body => {
+    // 2xx status 
+  })
+  .catch(err => {
+    console.log(err.statusCode);
+  })
+```
+
+#### Get the full response object
+
+```js
+const response = await server.post('/route', {
+  simple: false,
+  resolveWithFullResponse: true,
+});
+
+if (response.statusCode == 200) {
+  doSomething(response);
+} else {
+  handleFailure();
+}
+```
+[More info](https://github.com/request/request-promise#fulfilled-promises-and-the-resolvewithfullresponse-option)
 
 ## Contributing
 
