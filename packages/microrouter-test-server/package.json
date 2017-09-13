@@ -1,0 +1,25 @@
+{
+  "name": "microrouter-test-server",
+  "version": "1.0.3",
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "Chris Getsfred <cgetsfred@gmail.com>",
+  "dependencies": {
+    "micro": "^9.0.0",
+    "microrouter": "^2.2.2",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "test-listen": "^1.0.1"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elderfo/microrouter-test-server.git"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "jest": "^21.0.2"
+  }
+}

@@ -1,18 +1,20 @@
 {
   "name": "microrouter-test-server-jest",
-  "version": "1.0.0",
+  "private": true,
+  "version": "1.0.3",
   "description": "An example usage of microrouter-test-server with Jest",
   "main": "router.test.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch"
   },
   "author": "Chris Getsfred",
   "license": "MIT",
   "dependencies": {
     "micro": "^7.3.3",
-    "microrouter": "^2.1.1"
+    "microrouter": "^2.1.1",
+    "microrouter-test-server": "^1.0.3"
   },
   "devDependencies": {
-    "jest": "^20.0.4"
+    "jest": "^21.0.2"
   }
 }
