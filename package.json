@@ -21,8 +21,7 @@
     "micro": "^9.0.0",
     "npm-run-all": "^4.1.1",
     "prettier": "^1.6.1",
-    "rimraf": "^2.6.2",
-    "semantic-release": "^7.0.2"
+    "rimraf": "^2.6.2"
   },
   "scripts": {
     "build":
@@ -32,8 +31,6 @@
     "test:ci": "jest --coverage && codecov",
     "lint": "eslint .",
     "ci": "npm-run-all test:ci lint build",
-    "semantic-release":
-      "semantic-release pre && npm publish && semantic-release post",
     "precommit": "lint-staged",
     "clean-all": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules"
   },
