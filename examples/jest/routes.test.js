@@ -1,7 +1,7 @@
 // routes.test.js
 const { get, post, put } = require('microrouter');
 const { json, send } = require('micro');
-const { createServer } = require('../../packages/microrouter-test-server/src/');
+const { createServer } = require('microrouter-test-server');
 
 const routes = [
   get('/route1', () => 'route1'),

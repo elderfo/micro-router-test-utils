@@ -1,5 +1,6 @@
 {
   "name": "microrouter-test-server-jest",
+  "private": true,
   "version": "1.0.0",
   "description": "An example usage of microrouter-test-server with Jest",
   "main": "router.test.js",
@@ -11,7 +12,7 @@
   "dependencies": {
     "micro": "^7.3.3",
     "microrouter": "^2.1.1",
-    "microrouter-test-server": "^1.0.1"
+    "microrouter-test-server": "^0.0.0-development"
   },
   "devDependencies": {
     "jest": "^21.0.2"
