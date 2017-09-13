@@ -9,6 +9,10 @@ _**Micro Router Test Server-**_ A tiny test server for [microrouter](https://git
 * **Tiny**. < 60 lines of code.
 * **Independent**. No reliance on specific testing frameworks.
 
+## Pre-requisites
+
+Node 7+
+
 ## Usage
 
 Install as dev dependency
